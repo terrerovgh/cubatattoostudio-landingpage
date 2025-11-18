@@ -11,23 +11,33 @@ const Hero: React.FC = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      tl.from(titleRef.current, {
-        y: 100,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power4.out",
-        delay: 0.5
-      })
-      .from(subtitleRef.current, {
-        y: 50,
+      // 1. Location fades in first
+      tl.from(".hero-location", {
+        y: 20,
         opacity: 0,
         duration: 1,
-        ease: "power3.out"
-      }, "-=1")
-      .from(".hero-location", {
+        ease: "power3.out",
+        delay: 0.5
+      });
+
+      // 2. Title words fade in sequentially (staggered)
+      if (titleRef.current) {
+        tl.from(titleRef.current.children, {
+          y: 100,
+          opacity: 0,
+          duration: 1.5,
+          ease: "power4.out",
+          stagger: 0.12,
+        }, "-=0.5"); // Start slightly before location animation ends
+      }
+
+      // 3. Subtitle fades in last
+      tl.from(subtitleRef.current, {
+        y: 40,
         opacity: 0,
-        duration: 1
-      }, "-=0.5");
+        duration: 1.2,
+        ease: "power3.out"
+      }, "-=1.0"); // Overlap significantly with the end of title animation
 
     }, containerRef);
 

@@ -20,8 +20,10 @@ const Navigation: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       gsap.to(".mobile-menu", { x: 0, duration: 0.5, ease: "power3.out" });
+      document.body.style.overflow = 'hidden';
     } else {
       gsap.to(".mobile-menu", { x: "100%", duration: 0.5, ease: "power3.in" });
+      document.body.style.overflow = '';
     }
   }, [isOpen]);
 
@@ -50,7 +52,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 mix-blend-difference text-white ${scrolled ? 'py-4' : 'py-8'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 text-white ${scrolled ? 'py-4' : 'py-8'} ${isOpen ? 'bg-black/95' : 'mix-blend-difference'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <a 
             href="#" 
@@ -76,7 +78,7 @@ const Navigation: React.FC = () => {
           </div>
 
           {/* Mobile Button */}
-          <button className="md:hidden z-50" onClick={() => setIsOpen(!isOpen)}>
+          <button className="md:hidden z-50 focus:outline-none" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X /> : <Menu />}
           </button>
         </div>

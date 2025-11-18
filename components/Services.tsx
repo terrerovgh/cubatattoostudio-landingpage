@@ -40,7 +40,7 @@ const Services: React.FC = () => {
             {CONTENT.services.items.map((service) => (
               <div key={service.id} className="border-b border-gray-800 pb-12">
                 <div className="aspect-video w-full overflow-hidden mb-6 grayscale">
-                  <img src={service.image} alt={service.title} className="object-cover w-full h-full" />
+                  <img src={service.image} alt={service.title} className="object-cover w-full h-full" loading="lazy" />
                 </div>
                 <h3 className="text-2xl font-serif mb-4">{service.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{service.description}</p>
@@ -67,7 +67,7 @@ const Services: React.FC = () => {
                 <p className="text-xl text-gray-400 leading-loose max-w-lg">{service.description}</p>
              </div>
              <div className="w-1/2 h-[70vh] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
-                <img src={service.image} alt={service.title} className="object-cover w-full h-full scale-110 hover:scale-100 transition-transform duration-1000" />
+                <img src={service.image} alt={service.title} className="object-cover w-full h-full scale-110 hover:scale-100 transition-transform duration-1000" loading="lazy" />
              </div>
           </div>
         ))}

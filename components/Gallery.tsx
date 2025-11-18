@@ -43,6 +43,7 @@ const Gallery: React.FC = () => {
                 src={src} 
                 alt="Studio work" 
                 className="w-full grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out transform group-hover:scale-105" 
+                loading="lazy"
               />
             </div>
           ))}

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +25,22 @@ const Navigation: React.FC = () => {
     }
   }, [isOpen]);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    // If it's a link to the top or a specific section
+    const target = href === '#' ? document.body : document.querySelector(href);
+    
+    if (target) {
+      gsap.to(window, {
+        duration: 1.5,
+        scrollTo: { y: target, autoKill: false },
+        ease: "power4.inOut"
+      });
+    }
+  };
+
   const links = [
     { name: "Services", href: "#services" },
     { name: "Artists", href: "#artists" },
@@ -33,7 +52,13 @@ const Navigation: React.FC = () => {
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 mix-blend-difference text-white ${scrolled ? 'py-4' : 'py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold tracking-widest font-serif">CUBA</a>
+          <a 
+            href="#" 
+            onClick={(e) => handleNavClick(e, '#')}
+            className="text-2xl font-bold tracking-widest font-serif"
+          >
+            CUBA
+          </a>
           
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
@@ -41,6 +66,7 @@ const Navigation: React.FC = () => {
               <a 
                 key={link.name} 
                 href={link.href} 
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-sm uppercase tracking-[0.2em] hover:text-gray-400 transition-colors relative group"
               >
                 {link.name}
@@ -62,7 +88,7 @@ const Navigation: React.FC = () => {
           <a 
             key={link.name} 
             href={link.href} 
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => handleNavClick(e, link.href)}
             className="text-3xl font-serif uppercase tracking-widest text-white hover:text-gray-500 transition-colors"
           >
             {link.name}
